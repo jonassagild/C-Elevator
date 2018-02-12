@@ -13,6 +13,7 @@
 int main(int argc, const char * argv[]) {
     initialize_system();
     alert_system();
+    printf("Hei og hå");
    
     return 0;
 }
