@@ -7,17 +7,17 @@
 //
 
 #include "controller.h"
-
-void print_queue(){
-    Queue q;
-    q.next_floor = 2;
-    
-    printf("%d\n", get_next_floor(&q));
-    
-}
-
+#include "door.h"
 
 void handle_button(Button *button){
     printf("legger til %d button i køa\n", button->number);
     push_to_queue(button->number, true);
+}
+
+void set_floor_indicator(int floor){
+    elev_set_floor_indicator(floor); 
+}
+
+void handle_sensor(Sensor *sensor){
+    set_floor_indicator(sensor->floor); 
 }

@@ -10,11 +10,13 @@
 #define button_h
 
 #include <stdio.h>
+#include "elev.h"
 
 typedef enum {false, true}bool;
 
 typedef struct Button {
-    int number;
+    int floor;
+    elev_button_type_t button_type;
 }Button;
 
 

@@ -11,10 +11,17 @@
 
 #include "button.h"
 #include "queue.h"
+#include "sensor.h"
 
 #include <stdio.h>
 
 
-void print_queue(void);
+
+
 void handle_button(Button *button);
+void handle_sensor(Sensor *sensor); 
+void handle_next_in_line(void); 
+void handle_stop_button(void); 
+void set_floor_indicator(int floor); 
+
 #endif /* controller_h */

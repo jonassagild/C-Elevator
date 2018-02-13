@@ -13,6 +13,8 @@
 
 #include <stdio.h>
 #include "button.h"
+#include "sensor.h"
+#include "elev.h"
 
 void initialize_system(void);
 

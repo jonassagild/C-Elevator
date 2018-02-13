@@ -14,10 +14,7 @@ bool button_pushed;
 
 
 void detect_button(Button *self){
-    printf("lys i %d blir skrudd på \n", self->number);
-    light_indicator = true;
-    printf("handle_button i controller blir kalt: \n");
-    handle_button(self);
+    printf("Knapp i etasje %d", self->floor+1);
     
     
 }

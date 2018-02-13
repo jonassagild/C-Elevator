@@ -7,11 +7,30 @@
 
 int main() {
 
+   
+
+
+
     // Initialize hardware
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
         return 1;
     }
+
+     // sets speed to 0, and waits for ready signal
+    elev_motor_direction_t dirn = DIRN_STOP;
+    elev_set_motor_direction(dirn);
+
+    printf("Trykk enter for å starte\n");
+    int i;
+    scanf("%d", &i);
+    
+    // starts the elevator when user is ready
+    dirn = DIRN_UP;
+    elev_set_motor_direction(dirn);
+
+
+
 
     printf("Press STOP button to stop elevator and exit program.\n");
 
