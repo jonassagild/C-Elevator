@@ -11,7 +11,7 @@ typedef struct Sensor {
 /**
  Calls necessary functions to handle a detecting of a sensor.
  
- @param Sensor which has been detected.
+ @param *self which sensor that has been detected.
  */
 void detect_sensor(Sensor *self);
 

@@ -13,11 +13,10 @@
 
 typedef struct Queue Queue;
 
-
-
 struct Queue {
     int next_floor;
 };
+
 
 /**
  Finds the next floor.
@@ -26,6 +25,7 @@ struct Queue {
  @return int which is the next floor.
  */
 int get_next_floor(Queue *q);
+
 
 /**
  Calls necessary functions to handle a detecting of a sensor.
