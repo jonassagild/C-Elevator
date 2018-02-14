@@ -10,8 +10,8 @@
 #include "door.h"
 
 void handle_button(Button *button){
-    printf("legger til %d button i køa\n", button->number);
-    push_to_queue(button->number, true);
+    printf("legger til %d button i køa\n", button->floor);
+    push_to_queue(button->floor, true);
 }
 
 void set_floor_indicator(int floor){

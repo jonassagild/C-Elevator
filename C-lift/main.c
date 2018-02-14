@@ -8,9 +8,6 @@
 int main() {
 
    
-
-
-
     // Initialize hardware
     if (!elev_init()) {
         printf("Unable to initialize elevator hardware!\n");
@@ -28,8 +25,6 @@ int main() {
     // starts the elevator when user is ready
     dirn = DIRN_UP;
     elev_set_motor_direction(dirn);
-
-
 
 
     printf("Press STOP button to stop elevator and exit program.\n");
