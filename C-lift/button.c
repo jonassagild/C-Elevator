@@ -17,4 +17,11 @@ void detect_button(Button *self){
     printf("Knapp i etasje %d", self->floor+1);
     
     
+    // UNTESTED CODE!
+    if(self->button_type == BUTTON_STOP) {
+        handle_stop_button();
+    } else {
+        handle_button(self);
+    }
+    
 }

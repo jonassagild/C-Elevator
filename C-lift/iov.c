@@ -23,6 +23,8 @@ Button b2com;
 Button b3down;
 Button b3com;
 
+Button bstop;
+
 // declares all sensors
 Sensor s0;
 Sensor s1;
@@ -71,8 +73,9 @@ void initialize_system(void){
     buttons[8] = b3down;
     buttons[9] = b3com;
 
-
-
+    // sets stop button
+    bstop.floor = 0; // irrelevant
+    bstop.button_type = BUTTON_STOP;
 
     // sets all floor variables
     s0.floor = 0;
@@ -108,13 +111,20 @@ void alert_system(void){
                 break;
         }
     
-        // sjekker knapper, og kaller på handle funksjonene.
+        // sjekker knapper, og kaller på handle funksjonene
         for (int i = 0; i<10; i++){
             if(elev_get_button_signal(buttons[i].button_type, buttons[i].floor)){
                 detect_button(&buttons[i]);
             }
         }
 
+        
+        // UNTESTED CODE
+        // sjekker stopp-knapp, og kaller på handle funksjon
+        if (elev_get_stop_signal()){
+            detect_button(&bstop);
+        }
+        
 
         // MIDLERTIDLIG: bare for å teste koden over.. 
 
@@ -125,6 +135,7 @@ void alert_system(void){
             elev_set_motor_direction(DIRN_UP);
         }
 
+        
         // Stop elevator and exit program if the stop button is pressed
         if (elev_get_stop_signal()) {
             elev_set_motor_direction(DIRN_STOP);
