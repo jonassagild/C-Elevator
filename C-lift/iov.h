@@ -16,9 +16,17 @@
 #include "sensor.h"
 #include "elev.h"
 
+/**
+ Sets up all necessary variables
+ */
 void initialize_system(void);
 
+/**
+ Checks all IO's and call handle functions.
+ */
 void alert_system(void);
+
+
 
 
 #endif /* iov_h */

@@ -8,6 +8,11 @@ typedef struct Sensor {
 }Sensor;
 
 
+/**
+ Calls necessary functions to handle a detecting of a sensor.
+ 
+ @param Sensor which has been detected.
+ */
 void detect_sensor(Sensor *self);
 
 
