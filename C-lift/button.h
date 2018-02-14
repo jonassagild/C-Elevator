@@ -19,7 +19,11 @@ typedef struct Button {
     elev_button_type_t button_type;
 }Button;
 
-
+/**
+ Calls functions to handle a detection of a button. 
+ 
+ @param self Button which has been pushed.
+ */
 void detect_button(Button *self);
 
 

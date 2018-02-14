@@ -7,7 +7,6 @@
 
 /**
   Sets open_door_light, and waits 3 seconds.
-  @return void
 */
 bool open_door(void);
 
