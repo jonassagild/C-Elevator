@@ -26,7 +26,12 @@ void initialize_system(void);
  */
 void alert_system(void);
 
-
+/**
+ Checks if stop_button is pressed
+ 
+ @return bool true if button is pressed, false if not
+ */
+bool check_stop_button(void);
 
 
 #endif /* iov_h */

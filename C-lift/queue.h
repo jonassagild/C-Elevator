@@ -35,4 +35,10 @@ int get_next_floor(Queue *q);
  */
 void push_to_queue(int floor, bool inside_elevator);
 
+
+/**
+ Deletes the queue, and sets all light_indicators to false
+ */
+void deletequeue(void);
+
 #endif /* queue_h */

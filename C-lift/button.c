@@ -9,10 +9,6 @@
 #include "button.h"
 #include "controller.h"
 
-bool light_indicator;
-bool button_pushed;
-
-
 void detect_button(Button *self){
     printf("Knapp i etasje %d", self->floor+1);
     
@@ -21,7 +17,8 @@ void detect_button(Button *self){
     if(self->button_type == BUTTON_STOP) {
         handle_stop_button();
     } else {
-        handle_button(self);
+        if (elev_get_stop_signal() == 0){
+            handle_button(self);
+        }
     }
-    
 }

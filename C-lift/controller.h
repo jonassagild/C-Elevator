@@ -12,6 +12,8 @@
 #include "button.h"
 #include "queue.h"
 #include "sensor.h"
+#include "elev.h"
+#include "elevator.h"
 
 #include <stdio.h>
 
