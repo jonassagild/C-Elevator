@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "elev.h"
 
+
 typedef enum {false, true}bool;
 
 typedef struct Button {

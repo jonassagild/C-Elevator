@@ -83,7 +83,19 @@ void initialize_system(void){
     s2.floor = 2;
     s3.floor = 3;
     
+    // initialize the elevator in a defined state if it's not already in one  
+    elev_motor_direction_t dirn;
 
+    while (elev_get_floor_sensor_signal() == -1) {
+        dirn = DIRN_DOWN;
+        set_dir(dirn);
+    }
+    
+    set_floor_indicator(elev_get_floor_sensor_signal());
+
+    // stops the elevator
+    dirn = DIRN_STOP;
+    set_dir(dirn); 
 }
 
 void alert_system(void){
@@ -93,23 +105,30 @@ void alert_system(void){
        
 
         // sjekker sensorer, og kaller på handle funksjonen. 
+         // checks if door is open
+    
+
         int floor = elev_get_floor_sensor_signal();
-        switch(floor) {
-            case -1: // kan fjernes 
-                break;
-            case 0:
-                detect_sensor(&s0);
-                break;
-            case 1:
-                detect_sensor(&s1);
-                break;
-            case 2:
-                detect_sensor(&s2);
-                break;
-            case 3:
-                detect_sensor(&s3);
-                break;
+        if (check_timer(3)) {
+            switch(floor) {
+                case -1: // kan fjernes 
+                    break;
+                case 0:
+                    detect_sensor(&s0);
+                    break;
+                case 1:
+                    detect_sensor(&s1);
+                    break;
+                case 2:
+                    detect_sensor(&s2);
+                    break;
+                case 3:
+                    detect_sensor(&s3);
+                    break;
+            }
         }
+        
+
     
         // sjekker knapper, og kaller på handle funksjonene
         for (int i = 0; i<10; i++){
@@ -118,32 +137,18 @@ void alert_system(void){
             }
         }
 
+        // handles elevator direction
+        // checks if door is open
+        if (check_timer(3)){
+            handle_next_in_line();
+        }
         
-        // UNTESTED CODE
+    
         // sjekker stopp-knapp, og kaller på handle funksjon
         if (elev_get_stop_signal()){
             detect_button(&bstop);
         }
-        
-
-        // MIDLERTIDLIG: bare for å teste koden over.. 
-
-        // Change direction when we reach top/bottom floor
-        if (elev_get_floor_sensor_signal() == N_FLOORS - 1) {
-            elev_set_motor_direction(DIRN_DOWN);
-        } else if (elev_get_floor_sensor_signal() == 0) {
-            elev_set_motor_direction(DIRN_UP);
-        }
-
-        
-        // Stop elevator and exit program if the stop button is pressed
-        if (elev_get_stop_signal()) {
-            elev_set_motor_direction(DIRN_STOP);
-            break;
-        }
     }
-    
-    
 }
 
 

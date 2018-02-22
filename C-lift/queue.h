@@ -10,21 +10,14 @@
 #define queue_h
 #include <stdio.h>
 #include "button.h"
-
-typedef struct Queue Queue;
-
-struct Queue {
-    int next_floor;
-};
-
+#include "elev.h"
 
 /**
  Finds the next floor.
  
- @param *q reference to Queue
  @return int which is the next floor.
  */
-int get_next_floor(Queue *q);
+int get_next_floor(void);
 
 
 /**
@@ -33,12 +26,16 @@ int get_next_floor(Queue *q);
  @param floor int number to floor to be visited.
  @param inside_elevator boolean which is true if the button is inside the elevator.
  */
-void push_to_queue(int floor, bool inside_elevator);
+void push_to_queue(Button *button);
 
 
 /**
  Deletes the queue, and sets all light_indicators to false
  */
 void deletequeue(void);
+
+void initialize_queue(void); 
+
+void pop_from_queue(void);
 
 #endif /* queue_h */

@@ -9,18 +9,50 @@
 #include "controller.h"
 #include "door.h"
 
+int current_floor;
+elev_motor_direction_t last_motor_direction;
+
 
 void handle_button(Button *button){
-    printf("legger til %d button i køa\n", button->floor);
-    push_to_queue(button->floor, true);
+    push_to_queue(button);
 }
 
 void set_floor_indicator(int floor){
+    current_floor = floor;
     elev_set_floor_indicator(floor); 
 }
 
 void handle_sensor(Sensor *sensor){
     set_floor_indicator(sensor->floor); 
+    
+    elev_button_type_t button;
+
+    // turns off command button lights
+    button = BUTTON_COMMAND;
+    elev_set_button_lamp(button, sensor->floor, 0);
+
+    if (sensor->floor == 0){
+        button = BUTTON_CALL_UP;
+        elev_set_button_lamp(button, sensor->floor, 0);
+    } else if (sensor->floor == 3){
+        button = BUTTON_CALL_DOWN;
+        elev_set_button_lamp(button, sensor->floor, 0);
+
+    } else {
+        if (get_dir() == 1){
+            button = BUTTON_CALL_UP;
+            elev_set_button_lamp(button, sensor->floor, 0);
+        } else if (get_dir() == -1){
+            button = BUTTON_CALL_DOWN;
+            elev_set_button_lamp(button, sensor->floor, 0);
+        }
+    }
+
+    if (get_next_floor() == current_floor) {
+        printf("%d", get_next_floor());
+        pop_from_queue();
+        open_door();
+    } 
 }
 
 void handle_stop_button(void){
@@ -34,8 +66,49 @@ void handle_stop_button(void){
         open_door();
     }
     
-    //
-    if (elev_get_stop_signal()){
-        //lys på mens knapp er holdt inn
+    // skru av alle lys
+    elev_loop_lights_off();
+    
+    while (elev_get_stop_signal()){
+        elev_set_stop_lamp(1);
+    }
+    elev_set_stop_lamp(0);
+    
+}
+
+void handle_next_in_line(){
+
+    int next_floor;
+    next_floor = get_next_floor();
+
+    elev_motor_direction_t dir;
+
+    
+
+    // checks if the elevator is moving towars next_floor
+    if (next_floor != -1) { // a button have not been pressed 
+        if(next_floor < current_floor) {
+            last_motor_direction = DIRN_DOWN;
+            dir = DIRN_DOWN;
+            set_dir(dir);
+        } else if (next_floor > current_floor) {
+            last_motor_direction = DIRN_UP;
+            dir = DIRN_UP;
+            set_dir(dir);
+        } else if (elev_get_floor_sensor_signal() == -1) {
+            // kjør en vei. 
+            if (next_floor == current_floor && last_motor_direction == DIRN_DOWN){
+                dir = DIRN_UP;
+                set_dir(dir);
+            }
+            else if (next_floor == current_floor && last_motor_direction == DIRN_UP){
+                dir = DIRN_DOWN;
+                set_dir(dir);
+            }
+
+        } else {
+            dir = DIRN_STOP;
+            set_dir(dir);
+        }    
     }
 }

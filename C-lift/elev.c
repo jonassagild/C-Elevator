@@ -28,15 +28,10 @@ static const int button_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {BUTTON_UP3, BUTTON_DOWN3, BUTTON_COMMAND3},
     {BUTTON_UP4, BUTTON_DOWN4, BUTTON_COMMAND4},
 };
-
-int elev_init(void) {
+ // Zero all floor button lamps
+void elev_loop_lights_off(){
     int i;
-
-    // Init hardware
-    if (!io_init())
-        return 0;
-
-    // Zero all floor button lamps
+    
     for (i = 0; i < N_FLOORS; ++i) {
         if (i != 0)
             elev_set_button_lamp(BUTTON_CALL_DOWN, i, 0);
@@ -46,6 +41,16 @@ int elev_init(void) {
 
         elev_set_button_lamp(BUTTON_COMMAND, i, 0);
     }
+}
+
+int elev_init(void) {
+
+    // Init hardware
+    if (!io_init())
+        return 0;
+
+    // Zero all floor button lamps
+   elev_loop_lights_off();
 
     // Clear stop lamp, door open lamp, and set floor indicator to ground floor.
     elev_set_stop_lamp(0);

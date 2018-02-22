@@ -15,6 +15,9 @@
 #include "button.h"
 #include "sensor.h"
 #include "elev.h"
+#include "controller.h"
+#include "door.h"
+
 
 /**
  Sets up all necessary variables

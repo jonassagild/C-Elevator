@@ -10,14 +10,12 @@
 #include "controller.h"
 
 void detect_button(Button *self){
-    printf("Knapp i etasje %d", self->floor+1);
     
-    
-    // UNTESTED CODE!
-    if(self->button_type == BUTTON_STOP) {
+    if (self->button_type == BUTTON_STOP) {
         handle_stop_button();
     } else {
         if (elev_get_stop_signal() == 0){
+            elev_set_button_lamp(self->button_type, self->floor, 1);
             handle_button(self);
         }
     }

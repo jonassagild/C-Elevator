@@ -9,7 +9,8 @@
 // Number of floors
 #define N_FLOORS 4
 
-
+ // Zero all floor button lamps
+void elev_loop_lights_off();
 
 /**
   Initialize elevator.
