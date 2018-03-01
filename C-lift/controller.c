@@ -15,6 +15,9 @@ elev_motor_direction_t last_motor_direction;
 
 void handle_button(Button *button){
     push_to_queue(button);
+    
+    // prints queue
+    // print_queue_elements();
 }
 
 void set_floor_indicator(int floor){
@@ -23,7 +26,7 @@ void set_floor_indicator(int floor){
 }
 
 void handle_sensor(Sensor *sensor){
-    set_floor_indicator(sensor->floor); 
+    set_floor_indicator(sensor->floor);
     
     elev_button_type_t button;
 
@@ -49,9 +52,11 @@ void handle_sensor(Sensor *sensor){
     }
 
     if (get_next_floor() == current_floor) {
-        printf("%d", get_next_floor());
-        pop_from_queue();
-        open_door();
+        pop_from_queue(current_floor);
+        if (get_dir() != DIRN_STOP){
+            open_door();
+        }
+        
     } 
 }
 
@@ -105,10 +110,17 @@ void handle_next_in_line(){
                 dir = DIRN_DOWN;
                 set_dir(dir);
             }
-
         } else {
             dir = DIRN_STOP;
             set_dir(dir);
         }    
     }
+}
+
+int get_current_floor(void) {
+    return current_floor;
+}
+
+elev_motor_direction_t get_last_dir(void) {
+    return last_motor_direction;
 }

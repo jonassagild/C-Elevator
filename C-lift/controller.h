@@ -54,4 +54,12 @@ void handle_stop_button(void);
  */
 void set_floor_indicator(int floor); 
 
+
+// 
+int get_current_floor(void);
+
+
+//
+elev_motor_direction_t get_last_dir(void);
+
 #endif /* controller_h */
