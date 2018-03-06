@@ -40,7 +40,6 @@ void handle_sensor(Sensor *sensor){
     } else if (sensor->floor == 3){
         button = BUTTON_CALL_DOWN;
         elev_set_button_lamp(button, sensor->floor, 0);
-
     } else {
         if (get_dir() == 1){
             button = BUTTON_CALL_UP;
@@ -51,12 +50,8 @@ void handle_sensor(Sensor *sensor){
         }
     }
 
-    if (get_next_floor() == current_floor) {
-        pop_from_queue(current_floor);
-        if (get_dir() != DIRN_STOP){
-            open_door();
-        }
-        
+    if (pop_from_queue(current_floor)) {
+        open_door();
     } 
 }
 
@@ -92,7 +87,9 @@ void handle_next_in_line(){
 
     // checks if the elevator is moving towars next_floor
     if (next_floor != -1) { // a button have not been pressed 
+        printf("%d", next_floor);
         if(next_floor < current_floor) {
+            printf("hello");
             last_motor_direction = DIRN_DOWN;
             dir = DIRN_DOWN;
             set_dir(dir);

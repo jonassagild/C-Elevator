@@ -35,6 +35,7 @@ Sensor s3;
 Button buttons[10];
 
 void initialize_system(void){
+
     // sets all buttons
     b0up.floor = 0;
     b0up.button_type = BUTTON_CALL_UP;
@@ -58,8 +59,8 @@ void initialize_system(void){
 
     b3down.floor = 3;
     b3down.button_type = BUTTON_CALL_DOWN;
-    b0com.floor = 3;
-    b0com.button_type = BUTTON_COMMAND;
+    b3com.floor = 3;
+    b3com.button_type = BUTTON_COMMAND;
 
     // adds all buttons to buttons list
     buttons[0] = b0up;
@@ -101,6 +102,7 @@ void initialize_system(void){
 void alert_system(void){
     
     while(1){
+
         // sjekk om noen av IO er endret, og kall riktig metode, i tilfellet ja.
        
 

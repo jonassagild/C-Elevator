@@ -36,7 +36,7 @@ void deletequeue(void);
 
 void initialize_queue(void); 
 
-void pop_from_queue(int floor);
+bool pop_from_queue(int floor);
 
 // temporary, only for testing 
 void print_queue_elements(void);
