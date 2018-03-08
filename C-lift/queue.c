@@ -14,11 +14,6 @@
 
 int floors = 3; 
 
-typedef struct Order{
-    int floor;
-    elev_button_type_t button_type;
-    struct Order *next;
-}Order_t;
 
 Order_t *head;
 
@@ -31,7 +26,7 @@ void remove_from_queue(Order_t *order_to_be_removed, Order_t *last_order_element
 
 
 // finds next floor
-int get_next_floor(){
+Order_t* get_next_floor(){
     // get dir of elevator
     elev_motor_direction_t dir;
     dir = get_dir();
@@ -53,7 +48,7 @@ int get_next_floor(){
                         if(last_dir == DIRN_UP && check->floor == current_floor) {
                             // do nothing
                         } else {
-                            return check->floor;
+                            return check;
                         } 
                     }
                 }
@@ -64,7 +59,7 @@ int get_next_floor(){
                         if (last_dir == DIRN_DOWN && check->floor == current_floor) {
                             // do nothing
                         } else {
-                            return check->floor;
+                            return check;
                         } 
                     }
                 }
@@ -74,7 +69,7 @@ int get_next_floor(){
             check = check->next;
         }
     }
-    return head->floor;    
+    return head;    
 }
 
 
@@ -165,16 +160,26 @@ bool pop_from_queue(int floor){
     elev_motor_direction_t last_dir;
     last_dir = get_last_dir();
 
+    // get dir
+    elev_motor_direction_t dir;
+    dir = get_dir();
 
     // initialize order elements
     Order_t *last = NULL;
     Order_t *check = head;
 
     while (check != NULL) {
-        if (floor == check->floor) {
-            if (floor == 0 || floor == 3) {
+        if (floor == check->floor) { 
+            if (get_next_floor()->floor == check->floor && get_next_floor()->button_type == check->button_type) {
                 remove_from_queue(check, last);
                 something_popped = true;
+            } else if (floor == 0 || floor == 3) {
+                remove_from_queue(check, last);
+                something_popped = true;
+            } else if (last_dir == DIRN_DOWN && check->button_type ==  BUTTON_CALL_UP) {
+
+            } else if (last_dir == DIRN_UP && check->button_type ==  BUTTON_CALL_DOWN) {
+
             } else if (last_dir == DIRN_UP && check->button_type == BUTTON_CALL_UP) {
                 remove_from_queue(check, last);
                 something_popped = true;
@@ -190,12 +195,19 @@ bool pop_from_queue(int floor){
             } else if (check->floor == floor && check->next == NULL) {
                 remove_from_queue(check, last);
                 something_popped = true;
-            }
+            } 
         }
         last = check;
         check = check->next;
     } 
+    
+    if (something_popped) {
+        printf("ajskajs");
+    }
 
+    if (something_popped) {
+        pop_from_queue(floor);
+    }
 
     // probably never ?
     if (head == NULL) {
@@ -204,7 +216,9 @@ bool pop_from_queue(int floor){
         head->next = malloc(sizeof(Order_t));
         head->next = NULL;
     }
-
+    if(something_popped == true) {
+        printf("NÅ POPPA DET");
+    }
     return something_popped;
 }
 

@@ -50,8 +50,11 @@ void handle_sensor(Sensor *sensor){
         }
     }
 
+
     if (pop_from_queue(current_floor)) {
+        printf("Na SKJEDDE DET");
         open_door();
+        printf("dor opnet");
     } 
 }
 
@@ -78,18 +81,17 @@ void handle_stop_button(void){
 
 void handle_next_in_line(){
 
-    int next_floor;
-    next_floor = get_next_floor();
+    Order_t *next;
+    next = get_next_floor();
 
+    int next_floor = next->floor;
     elev_motor_direction_t dir;
 
     
 
     // checks if the elevator is moving towars next_floor
     if (next_floor != -1) { // a button have not been pressed 
-        printf("%d", next_floor);
         if(next_floor < current_floor) {
-            printf("hello");
             last_motor_direction = DIRN_DOWN;
             dir = DIRN_DOWN;
             set_dir(dir);

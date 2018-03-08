@@ -102,7 +102,6 @@ void initialize_system(void){
 void alert_system(void){
     
     while(1){
-
         // sjekk om noen av IO er endret, og kall riktig metode, i tilfellet ja.
        
 

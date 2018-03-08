@@ -12,12 +12,20 @@
 #include "button.h"
 #include "elev.h"
 
+
+typedef struct Order{
+    int floor;
+    elev_button_type_t button_type;
+    struct Order *next;
+}Order_t;
+
+
 /**
  Finds the next floor.
  
  @return int which is the next floor.
  */
-int get_next_floor(void);
+Order_t* get_next_floor(void);
 
 
 /**
