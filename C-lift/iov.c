@@ -75,7 +75,7 @@ void initialize_system(void){
     buttons[9] = b3com;
 
     // sets stop button
-    bstop.floor = 0; // irrelevant
+    bstop.floor = 0; 
     bstop.button_type = BUTTON_STOP;
 
     // sets all floor variables
@@ -102,17 +102,11 @@ void initialize_system(void){
 void alert_system(void){
     
     while(1){
-        // sjekk om noen av IO er endret, og kall riktig metode, i tilfellet ja.
-       
-
-        // sjekker sensorer, og kaller på handle funksjonen. 
-         // checks if door is open
-    
-
+        
         int floor = elev_get_floor_sensor_signal();
         if (check_timer(3)) {
             switch(floor) {
-                case -1: // kan fjernes 
+                case -1: 
                     break;
                 case 0:
                     detect_sensor(&s0);
@@ -131,21 +125,19 @@ void alert_system(void){
         
 
     
-        // sjekker knapper, og kaller på handle funksjonene
+        // checks buttons, and calls appropriate functions
         for (int i = 0; i<10; i++){
             if(elev_get_button_signal(buttons[i].button_type, buttons[i].floor)){
                 detect_button(&buttons[i]);
             }
         }
 
-        // handles elevator direction
-        // checks if door is open
+        // checks if door is open and handles elevator direction
         if (check_timer(3)){
             handle_next_in_line();
-        }
-        
+        }        
     
-        // sjekker stopp-knapp, og kaller på handle funksjon
+        // checks stop-button
         if (elev_get_stop_signal()){
             detect_button(&bstop);
         }

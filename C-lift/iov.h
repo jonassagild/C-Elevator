@@ -20,7 +20,7 @@
 
 
 /**
- Sets up all necessary variables
+ Sets up necessary variables
  */
 void initialize_system(void);
 

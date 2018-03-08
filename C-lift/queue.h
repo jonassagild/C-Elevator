@@ -12,7 +12,10 @@
 #include "button.h"
 #include "elev.h"
 
-
+/**
+ Struct represents a linked list and an element. 
+ *next is pointer to next queue element. 
+ */
 typedef struct Order{
     int floor;
     elev_button_type_t button_type;
@@ -49,19 +52,13 @@ void initialize_queue(void);
 
 
 /**
- Adds buttons floor to queue, if the button is not already in queue.
+ Removes floor from queue.
  
  @param floor which is to be removed from the queue.
  
  @return bool true if something was popped, and bool false if nothing was popped.
  */
 bool pop_from_queue(int floor);
-
-
-/**
- For printing queue elements. Only for developing.
- */
-void print_queue_elements(void);
 
 
 #endif /* queue_h */

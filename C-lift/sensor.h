@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 
+/**
+ Struct that represents a sensor. Floor is the sensors floor. 
+*/
 typedef struct Sensor {
     int floor;
 }Sensor;

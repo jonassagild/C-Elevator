@@ -19,7 +19,7 @@
 
 
 /**
-Handle button pushs. Adds floor to queue.
+Handle button pushes. Adds floor to queue.
  
  @param button Button which is pushed.
  */

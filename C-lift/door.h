@@ -15,6 +15,7 @@ time_t end_value;
 */
 void open_door(void);
 
+
 /**
  Starts the timer.
  */

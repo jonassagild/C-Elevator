@@ -15,18 +15,16 @@ int main() {
         return 1;
     }
 
-     // sets speed to 0, and waits for ready signal
+     // sets speed to 0, and waits for start signal
     elev_motor_direction_t dirn = DIRN_STOP;
     elev_set_motor_direction(dirn);
 
-    printf("Trykk enter for å starte\n");
+    printf("Write something and press enter to start.\n");
     int i;
     scanf("%d", &i);
 
+    printf("Press ctrl + c to stop the elevator\n");
 
-
-    printf("Press STOP button to stop elevator and exit program.\n");
-    
     initialize_queue();
     initialize_system();
     alert_system();

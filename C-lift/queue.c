@@ -12,35 +12,54 @@
 #include "controller.h"
 
 
-int floors = 3; 
-
-
 Order_t *head;
 
+// internal header
 
+/**
+ Checks if parameter button is already in queue.
+ 
+ @param button which is to be checked.
+ 
+ @return bool true if button is already in queue, and false if its not in queue.
+ */
 bool check_already_in_queue(Button *button);
 
+
+/**
+ Helper function to push_to_queue. Adds button to list.
+ 
+ @param queue, button. Button which is to be added to queue. 
+ */
 void add_to_queue(Order_t *queue, Button *button);
 
+
+/**
+ Helper function to pop_from_queue. Removes order_to_be_removed from list. 
+ 
+ @param order_to_be_removed, last_order_element. Order_to_be_removed is the order to
+  be removed, last_order_element is the element before order_to_be_removed, in the list.
+ */
 void remove_from_queue(Order_t *order_to_be_removed, Order_t *last_order_element);
 
+// end internal header
 
-// finds next floor
+
 Order_t* get_next_floor(){
-    // get dir of elevator
+    // get dir from elevator
     elev_motor_direction_t dir;
     dir = get_dir();
     elev_motor_direction_t last_dir;
     last_dir = get_last_dir();
 
-    // get current floor of elevator
+
+    // get current floor from elevator
     int current_floor = get_current_floor();
 
 
     // finds the next floor 
     for (int i = 0; i<N_FLOORS; i++) {
         Order_t *check = head;
-
         while(check != NULL) {
             if(dir == DIRN_UP || last_dir == DIRN_UP){
                 if (check->floor == current_floor + i) {
@@ -109,9 +128,7 @@ void add_to_queue(Order_t *queue, Button *button) {
         queue = queue->next;
     }
     
-    queue->next = o;
-    
-    
+    queue->next = o;   
 }
 
 
@@ -123,11 +140,6 @@ void push_to_queue(Button *button){
 
     // adds element to queue
     add_to_queue(head, button);
-
-    // // checks if elevator is in a defined state - why?
-    // if (head->floor == -1){
-    //     head = head->next;
-    // } 
 }
 
 
@@ -136,33 +148,12 @@ void deletequeue(void){
 }
 
 
-void print_queue_elements(){
-    Order_t *midl_queue;
-    midl_queue = head;
-    int i = 0;
-
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("%dte køelement er %d, %d\n", i, midl_queue->floor, midl_queue->button_type);
-    
-    while(midl_queue->next != NULL) {
-        midl_queue = midl_queue->next;
-        printf("%dte køelement er %d, %d\n", i, midl_queue->floor, midl_queue->button_type);
-        i++;
-    }
-}
-
-
 bool pop_from_queue(int floor){
-    // sets return
     bool something_popped = false;
 
-    // get last_direction
+    // gets last_direction
     elev_motor_direction_t last_dir;
     last_dir = get_last_dir();
-
-    // get dir
-    elev_motor_direction_t dir;
-    dir = get_dir();
 
     // initialize order elements
     Order_t *last = NULL;
@@ -177,9 +168,9 @@ bool pop_from_queue(int floor){
                 remove_from_queue(check, last);
                 something_popped = true;
             } else if (last_dir == DIRN_DOWN && check->button_type ==  BUTTON_CALL_UP) {
-
+                // do nothing
             } else if (last_dir == DIRN_UP && check->button_type ==  BUTTON_CALL_DOWN) {
-
+                // do nothing
             } else if (last_dir == DIRN_UP && check->button_type == BUTTON_CALL_UP) {
                 remove_from_queue(check, last);
                 something_popped = true;
@@ -202,23 +193,17 @@ bool pop_from_queue(int floor){
     } 
     
     if (something_popped) {
-        printf("ajskajs");
-    }
-
-    if (something_popped) {
         pop_from_queue(floor);
     }
 
-    // probably never ?
+    
     if (head == NULL) {
         head = malloc(sizeof(Order_t));
         head->floor = -1;
         head->next = malloc(sizeof(Order_t));
         head->next = NULL;
     }
-    if(something_popped == true) {
-        printf("NÅ POPPA DET");
-    }
+
     return something_popped;
 }
 
@@ -226,16 +211,16 @@ bool pop_from_queue(int floor){
 void initialize_queue(void){
     head = NULL;
     head = malloc(sizeof(Order_t));
-    head->button_type = BUTTON_COMMAND; // could have been anything
+    head->button_type = BUTTON_COMMAND; 
     head->floor = -1;
     head->next = malloc(sizeof(Order_t));
     head->next = NULL;
 }
 
 void remove_from_queue(Order_t *order_to_be_removed, Order_t *last_order_element) {
-    if (last_order_element != NULL) { // if there is a last_order_element
-        if (order_to_be_removed->next != NULL) { // hvis order_to_be_removed har et element etter seg
-            last_order_element->next = order_to_be_removed->next; // 
+    if (last_order_element != NULL) { 
+        if (order_to_be_removed->next != NULL) { 
+            last_order_element->next = order_to_be_removed->next; 
         } else { 
             last_order_element->next = NULL;
         }

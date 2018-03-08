@@ -15,9 +15,6 @@ elev_motor_direction_t last_motor_direction;
 
 void handle_button(Button *button){
     push_to_queue(button);
-    
-    // prints queue
-    // print_queue_elements();
 }
 
 void set_floor_indicator(int floor){
@@ -33,7 +30,8 @@ void handle_sensor(Sensor *sensor){
     // turns off command button lights
     button = BUTTON_COMMAND;
     elev_set_button_lamp(button, sensor->floor, 0);
-
+    
+    // turns off up and down button lights
     if (sensor->floor == 0){
         button = BUTTON_CALL_UP;
         elev_set_button_lamp(button, sensor->floor, 0);
@@ -47,14 +45,16 @@ void handle_sensor(Sensor *sensor){
         } else if (get_dir() == -1){
             button = BUTTON_CALL_DOWN;
             elev_set_button_lamp(button, sensor->floor, 0);
-        }
+        } 
+    } 
+    if (get_next_floor()->floor == -1 && get_dir() == 0){
+        elev_loop_lights_off();
     }
 
 
+    // checks if this floor is in queue, and opens door
     if (pop_from_queue(current_floor)) {
-        printf("Na SKJEDDE DET");
         open_door();
-        printf("dor opnet");
     } 
 }
 
@@ -64,12 +64,10 @@ void handle_stop_button(void){
     elev_motor_direction_t dir = DIRN_STOP;
     set_dir(dir);
     
-    // sjekker om noen av sensorene er høy
     if (elev_get_floor_sensor_signal() != -1){
         open_door();
     }
     
-    // skru av alle lys
     elev_loop_lights_off();
     
     while (elev_get_stop_signal()){
@@ -100,7 +98,6 @@ void handle_next_in_line(){
             dir = DIRN_UP;
             set_dir(dir);
         } else if (elev_get_floor_sensor_signal() == -1) {
-            // kjør en vei. 
             if (next_floor == current_floor && last_motor_direction == DIRN_DOWN){
                 dir = DIRN_UP;
                 set_dir(dir);
