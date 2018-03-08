@@ -15,11 +15,19 @@ time_t end_value;
 */
 void open_door(void);
 
-
-void start_timer(); 
+/**
+ Starts the timer.
+ */
+void start_timer(void);
  
 
-//returns 1 if 3 second timer is finished  
+/**
+ Returns 1 if the input seconds has passed since the timer started.
+ 
+ @param seconds. The number of seconds you want to check wheter has passed since the clock started.
+ 
+ @return int. 1 if the number of seconds has passed, 0 else.
+ */
 int check_timer(double seconds);
 
 #endif /* door.h */

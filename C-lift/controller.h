@@ -18,7 +18,6 @@
 #include <stdio.h>
 
 
-
 /**
 Handle button pushs. Adds floor to queue.
  
@@ -55,11 +54,15 @@ void handle_stop_button(void);
 void set_floor_indicator(int floor); 
 
 
-// 
+/**
+ Returns this floor, or the last vistited floor.
+ */
 int get_current_floor(void);
 
 
-//
+/**
+ Returns a elev_motor_direction_t which represents the last direction of the elevator
+ */
 elev_motor_direction_t get_last_dir(void);
 
 #endif /* controller_h */

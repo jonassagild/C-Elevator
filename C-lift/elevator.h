@@ -26,6 +26,6 @@ void set_dir(elev_motor_direction_t dirn);
  
  @return direction.
  */
-elev_motor_direction_t get_dir();
+elev_motor_direction_t get_dir(void);
 
 #endif /* elevator_h */

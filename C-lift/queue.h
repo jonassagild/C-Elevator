@@ -21,10 +21,9 @@ int get_next_floor(void);
 
 
 /**
- Calls necessary functions to handle a detecting of a sensor.
+ Adds buttons floor to queue, if the button is not already in queue.
  
- @param floor int number to floor to be visited.
- @param inside_elevator boolean which is true if the button is inside the elevator.
+ @param button which represents the button that is pushed.
  */
 void push_to_queue(Button *button);
 
@@ -34,11 +33,26 @@ void push_to_queue(Button *button);
  */
 void deletequeue(void);
 
-void initialize_queue(void); 
 
+/**
+ Initiliaze the head of the queue.
+ */
+void initialize_queue(void);
+
+
+/**
+ Adds buttons floor to queue, if the button is not already in queue.
+ 
+ @param floor which is to be removed from the queue.
+ 
+ @return bool true if something was popped, and bool false if nothing was popped.
+ */
 bool pop_from_queue(int floor);
 
-// temporary, only for testing 
+
+/**
+ For printing queue elements. Only for developing.
+ */
 void print_queue_elements(void);
 
 
